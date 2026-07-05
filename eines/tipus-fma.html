@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol FMA - UIB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .tab-button.active {
+            border-bottom-color: #3b82f6;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .phenomenon-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .level-groc { background-color: #fef08a; border-left: 5px solid #facc15; }
+        .level-taronja { background-color: #ffedd5; border-left: 5px solid #fb923c; }
+        .level-vermell { background-color: #fee2e2; border-left: 5px solid #ef4444; }
+        .level-verd { background-color: #dcfce7; border-left: 5px solid #22c55e; }
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+    <div class="max-w-7xl mx-auto bg-white rounded-2xl card-shadow overflow-hidden">
+        <header class="bg-gray-800 text-white p-6 flex items-center space-x-4">
+            <div class="bg-blue-600 p-2 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold">Protocol d'Actuació davant Fenòmens Meteorològics Adversos (FMA)</h1>
+                <p class="text-gray-300">Guia Interactiva de la Universitat de les Illes Balears (UIB)</p>
+            </div>
+        </header>
+
+        <main>
+            <!-- Tabs principals -->
+            <div class="border-b border-gray-200">
+                <nav class="flex -mb-px px-6" aria-label="Tabs">
+                    <button id="tab-btn-levels" class="tab-button active w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-colors">
+                        Nivells d'Alerta
+                    </button>
+                    <button id="tab-btn-phenomena" class="tab-button w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-colors">
+                        Fenòmens i Indicadors
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Contingut dels Tabs -->
+            <div id="tab-content-levels" class="tab-content p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Descripció dels Nivells d'Alerta</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-bold text-lg mb-2 text-gray-700">Sistema d'Avisos AEMET</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-lg level-verd">
+                                <p class="font-bold text-green-800">VERD: Sense risc</p>
+                                <p class="text-sm text-gray-700">No s'espera cap fenomen meteorològic que suposi un risc. Situació de normalitat.</p>
+                            </div>
+                            <div class="p-4 rounded-lg level-groc">
+                                <p class="font-bold text-yellow-800">GROC: Risc baix</p>
+                                <p class="text-sm text-gray-700">Fenòmens meteorològics no habituals però de baixa intensitat. Cert perill per a activitats concretes.</p>
+                            </div>
+                            <div class="p-4 rounded-lg level-taronja">
+                                <p class="font-bold text-orange-800">TARONJA: Risc moderat</p>
+                                <p class="text-sm text-gray-700">Fenòmens meteorològics intensos amb perill per a persones i béns. Risc important per a les activitats habituals.</p>
+                            </div>
+                             <div class="p-4 rounded-lg level-vermell">
+                                <p class="font-bold text-red-800">VERMELL: Risc extrem</p>
+                                <p class="text-sm text-gray-700">Fenòmens molt adversos amb alt potencial de dany. Risc molt alt per a la població en general.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                         <h3 class="font-bold text-lg mb-2 text-gray-700">Índex de Gravetat METEOBAL (CAIB)</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-lg bg-gray-100 border-l-4 border-gray-400">
+                                <p class="font-bold text-gray-800">IG 0: Preemergència</p>
+                                <p class="text-sm text-gray-700">Previsió d'un FMA imminent. Incidents locals menors i controlables.</p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-gray-100 border-l-4 border-gray-400">
+                                <p class="font-bold text-gray-800">IG 1: Emergència Nivell 1</p>
+                                <p class="text-sm text-gray-700">FMA en zones localitzades. L'atenció pot ser assegurada amb mitjans locals, però el seguiment ha de ser supramunicipal.</p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-gray-100 border-l-4 border-gray-400">
+                                <p class="font-bold text-gray-800">IG 2: Emergència Nivell 2</p>
+                                <p class="text-sm text-gray-700">L'FMA supera la capacitat de resposta local. Possibilitat d'extensió o agreujament.</p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-gray-100 border-l-4 border-gray-400">
+                                <p class="font-bold text-gray-800">IG 3: Emergència Nivell 3</p>
+                                <p class="text-sm text-gray-700">Danys catastròfics no controlables amb els recursos de la Comunitat Autònoma. Es pot declarar l'interès nacional.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <h3 class="font-bold text-lg mb-2 text-gray-700">Correspondència entre Sistemes</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-600 rounded-lg overflow-hidden">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Nivell METEOBAL</th>
+                                    <th scope="col" class="px-6 py-3">Nivell AEMET</th>
+                                    <th scope="col" class="px-6 py-3">Color</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4 font-medium">IG 0</td>
+                                    <td class="px-6 py-4">VERD</td>
+                                    <td class="px-6 py-4"><div class="h-4 w-16 rounded-full bg-green-400"></div></td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4 font-medium">IG 1</td>
+                                    <td class="px-6 py-4">GROC</td>
+                                    <td class="px-6 py-4"><div class="h-4 w-16 rounded-full bg-yellow-400"></div></td>
+                                </tr>
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4 font-medium">IG 2</td>
+                                    <td class="px-6 py-4">TARONJA</td>
+                                    <td class="px-6 py-4"><div class="h-4 w-16 rounded-full bg-orange-400"></div></td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <td class="px-6 py-4 font-medium">IG 3</td>
+                                    <td class="px-6 py-4">VERMELL</td>
+                                    <td class="px-6 py-4"><div class="h-4 w-16 rounded-full bg-red-500"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-content-phenomena" class="tab-content hidden p-6">
+                 <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Botons de selecció de fenomen -->
+                    <aside class="w-full md:w-1/4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Seleccioni un fenomen:</h3>
+                        <div id="phenomena-buttons" class="flex flex-row md:flex-col flex-wrap gap-2">
+                             <button class="phenomenon-button active text-left w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors" data-phenomenon="pluja">
+                                🌧️ Pluges Intenses / Inundacions
+                            </button>
+                            <button class="phenomenon-button text-left w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors" data-phenomenon="vent">
+                                💨 Vents Forts
+                            </button>
+                            <button class="phenomenon-button text-left w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors" data-phenomenon="calor">
+                                ☀️ Ones de Calor
+                            </button>
+                            <button class="phenomenon-button text-left w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors" data-phenomenon="tempesta">
+                                ⚡ Tempestes Elèctriques
+                            </button>
+                            <button class="phenomenon-button text-left w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors" data-phenomenon="fred">
+                                ❄️ Fred Extrem / Neu o Gel
+                            </button>
+                            <button class="phenomenon-button text-left w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors" data-phenomenon="costa">
+                                🌊 Fenòmens Costaners
+                            </button>
+                        </div>
+                    </aside>
+
+                    <!-- Contingut del fenomen seleccionat -->
+                    <div id="phenomena-content" class="w-full md:w-3/4">
+                        <!-- Pluja -->
+                        <div class="phenomenon-details" data-phenomenon="pluja">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Pluges Intenses / Inundacions</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 rounded-lg level-groc">
+                                    <p class="font-bold text-yellow-800">NIVELL GROC (IG 1)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Acumulació ≥ 20 mm/h o ≥ 40 mm/12h.</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-taronja">
+                                    <p class="font-bold text-orange-800">NIVELL TARONJA (IG 2)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Acumulació ≥ 30 mm/h o ≥ 60 mm/12h.</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-vermell">
+                                    <p class="font-bold text-red-800">NIVELL VERMELL (IG 3)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Acumulació ≥ 60 mm/h o ≥ 120 mm/12h.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vent -->
+                        <div class="phenomenon-details hidden" data-phenomenon="vent">
+                             <h3 class="text-xl font-bold text-gray-800 mb-4">Vents Forts</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 rounded-lg level-groc">
+                                    <p class="font-bold text-yellow-800">NIVELL GROC (IG 1)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Ratxes màximes de vent ≥ 70 km/h.</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-taronja">
+                                    <p class="font-bold text-orange-800">NIVELL TARONJA (IG 2)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Ratxes màximes de vent ≥ 90 km/h.</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-vermell">
+                                    <p class="font-bold text-red-800">NIVELL VERMELL (IG 3)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Ratxes màximes de vent ≥ 120 km/h.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calor -->
+                         <div class="phenomenon-details hidden" data-phenomenon="calor">
+                             <h3 class="text-xl font-bold text-gray-800 mb-4">Ones de Calor</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 rounded-lg level-groc">
+                                    <p class="font-bold text-yellow-800">NIVELL GROC (IG 1)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Temperatures màximes > 36°C.</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-taronja">
+                                    <p class="font-bold text-orange-800">NIVELL TARONJA (IG 2)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Temperatures màximes > 39°C.</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-vermell">
+                                    <p class="font-bold text-red-800">NIVELL VERMELL (IG 3)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Temperatures màximes ≥ 44°C.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tempesta -->
+                         <div class="phenomenon-details hidden" data-phenomenon="tempesta">
+                             <h3 class="text-xl font-bold text-gray-800 mb-4">Tempestes Elèctriques</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 rounded-lg level-groc">
+                                    <p class="font-bold text-yellow-800">NIVELL GROC (IG 1)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Alta probabilitat. Llamps a &lt; 10 km de distància.</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-taronja">
+                                    <p class="font-bold text-orange-800">NIVELL TARONJA (IG 2)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Alta probabilitat. Llamps a &lt; 8 km de distància.</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-vermell">
+                                    <p class="font-bold text-red-800">NIVELL VERMELL (IG 3)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Tempestes amb risc de fenòmens molt severs.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fred -->
+                         <div class="phenomenon-details hidden" data-phenomenon="fred">
+                             <h3 class="text-xl font-bold text-gray-800 mb-4">Fred Extrem / Neu o Gel</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 rounded-lg level-groc">
+                                    <p class="font-bold text-yellow-800">NIVELL GROC (IG 1)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Acumulació de neu ≥ 5 cm/24h (cotes baixes).</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-taronja">
+                                    <p class="font-bold text-orange-800">NIVELL TARONJA (IG 2)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Acumulació de neu ≥ 10 cm/24h (cotes baixes).</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-vermell">
+                                    <p class="font-bold text-red-800">NIVELL VERMELL (IG 3)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Acumulació de neu ≥ 20 cm/24h (cotes baixes).</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Costa -->
+                        <div class="phenomenon-details hidden" data-phenomenon="costa">
+                             <h3 class="text-xl font-bold text-gray-800 mb-4">Fenòmens Costaners</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 rounded-lg level-groc">
+                                    <p class="font-bold text-yellow-800">NIVELL GROC (IG 1)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Onatge de 3-4 m i/o vent força 7 (50-61 km/h).</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-taronja">
+                                    <p class="font-bold text-orange-800">NIVELL TARONJA (IG 2)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Onatge de 4-6 m i/o vent força 8 o superior (≥62 km/h).</p>
+                                </div>
+                                <div class="p-4 rounded-lg level-vermell">
+                                    <p class="font-bold text-red-800">NIVELL VERMELL (IG 3)</p>
+                                    <p class="text-sm text-gray-700 mt-1"><strong>Indicador:</strong> Onatge ≥ 6 m i/o vent força 9 o superior (≥75 km/h).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const phenomenonButtons = document.querySelectorAll('.phenomenon-button');
+            const phenomenonDetails = document.querySelectorAll('.phenomenon-details');
+
+            // --- Gestió dels tabs principals ---
+            const tabBtnLevels = document.getElementById('tab-btn-levels');
+            const tabBtnPhenomena = document.getElementById('tab-btn-phenomena');
+            const tabContentLevels = document.getElementById('tab-content-levels');
+            const tabContentPhenomena = document.getElementById('tab-content-phenomena');
+
+            function switchMainTab(activeBtn, inactiveBtn, activeContent, inactiveContent) {
+                activeBtn.classList.add('active');
+                inactiveBtn.classList.remove('active');
+                activeContent.classList.remove('hidden');
+                inactiveContent.classList.add('hidden');
+            }
+
+            tabBtnLevels.addEventListener('click', () => {
+                switchMainTab(tabBtnLevels, tabBtnPhenomena, tabContentLevels, tabContentPhenomena);
+            });
+
+            tabBtnPhenomena.addEventListener('click', () => {
+                switchMainTab(tabBtnPhenomena, tabBtnLevels, tabContentPhenomena, tabContentLevels);
+            });
+
+
+            // --- Gestió dels fenòmens ---
+            phenomenonButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Actualitzar botons
+                    phenomenonButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Mostrar el contingut corresponent
+                    const selectedPhenomenon = button.dataset.phenomenon;
+                    phenomenonDetails.forEach(detail => {
+                        if (detail.dataset.phenomenon === selectedPhenomenon) {
+                            detail.classList.remove('hidden');
+                        } else {
+                            detail.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

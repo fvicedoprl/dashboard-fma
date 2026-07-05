@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panell de control — Protocol FMA · UIB</title>
+<meta name="description" content="Panell de control del Protocol d'actuació davant Fenòmens Meteorològics Adversos (FMA) — Servei de Prevenció, Universitat de les Illes Balears.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --uib-blau-fosc:#003E72;
+    --uib-blau:#0071BC;
+    --uib-blau-pantone300:#0085CA;
+    --verd:#2E7D32;
+    --groc:#FFC72C;
+    --taronja:#FF8200;
+    --vermell:#E8392A;
+    --gris-buit:#C4CCD3;
+    --fons:#f4f7fc;
+    --text:#1c2733;
+    --text-suau:#5a6b7d;
+    --vora:#dbe3ee;
+    --blanc:#ffffff;
+    --radi:14px;
+    --ombra:0 2px 10px rgba(0,40,80,0.08);
+    --ombra-hover:0 6px 20px rgba(0,40,80,0.14);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    font-family:'Inter',Arial,Helvetica,sans-serif;
+    background:var(--fons);
+    color:var(--text);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--uib-blau);}
+
+  .oculta{ display:none !important; }
+
+  /* ============ CAPÇALERA ============ */
+  header.capcalera{
+    background:linear-gradient(135deg,var(--uib-blau-fosc) 0%, #002B4F 100%);
+    color:#fff;
+    padding:20px 24px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+
+  /*
+    Per afegir el logotip oficial de la UIB:
+    1. Deseu el fitxer (p. ex. logo-uib.svg o logo-uib-blanc.png) dins una carpeta
+       "assets/" al costat d'aquest index.html.
+    2. Descomenteu la línia <img> corresponent dins el <header class="capcalera">
+       de l'HTML (vegeu comentari allà) i ajusteu-ne la ruta (relativa, p.ex. "assets/logo-uib.svg").
+    3. Manteniu una alçada aproximada de 40-48px perquè encaixi amb la capçalera.
+  */
+
+  .capcalera__logo{
+    height:44px;
+    width:auto;
+    flex-shrink:0;
+  }
+
+  .capcalera__text h1{
+    margin:0;
+    font-size:1.3rem;
+    font-weight:800;
+    letter-spacing:.2px;
+  }
+  .capcalera__text p{
+    margin:2px 0 0;
+    font-size:.85rem;
+    color:#cfe3f5;
+    font-weight:500;
+  }
+
+  main{
+    max-width:1100px;
+    margin:0 auto;
+    padding:24px 16px 60px;
+  }
+
+  section{ margin-bottom:36px; }
+
+  h2.titol-seccio{
+    font-size:1.15rem;
+    color:var(--uib-blau-fosc);
+    margin:0 0 14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:700;
+  }
+
+  /* ============ SEMÀFOR / BANNER ============ */
+  .panell-meteo{
+    background:var(--blanc);
+    border-radius:var(--radi);
+    box-shadow:var(--ombra);
+    border:1px solid var(--vora);
+    padding:20px 22px;
+  }
+
+  .semafor-fila{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:22px;
+    margin-bottom:6px;
+  }
+
+  .semafor-dia{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    min-width:76px;
+  }
+
+  .semafor-dia__cercle{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:2px solid rgba(0,0,0,0.15);
+    background:var(--gris-buit);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .semafor-dia__cercle--0{ background:var(--verd); }
+  .semafor-dia__cercle--1{ background:radial-gradient(circle,#6b5400 0 18%, var(--groc) 20% 100%); }
+  .semafor-dia__cercle--2{
+    background:radial-gradient(circle,#7a3f00 0 12%, var(--taronja) 14% 34%, #fff 36% 48%, var(--taronja) 50% 100%);
+  }
+  .semafor-dia__cercle--3{
+    background:radial-gradient(circle,#5c0c06 0 12%, var(--vermell) 14% 34%, #fff 36% 48%, var(--vermell) 50% 100%);
+    animation:pols-vermell 1.6s ease-in-out infinite;
+  }
+  .semafor-dia__cercle--buit{ background:var(--gris-buit); }
+
+  @keyframes pols-vermell{
+    0%,100%{ box-shadow:0 0 0 0 rgba(232,57,42,0.5); }
+    50%{ box-shadow:0 0 0 6px rgba(232,57,42,0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .semafor-dia__cercle--3{ animation:none; }
+    *{ scroll-behavior:auto !important; }
+  }
+
+  .semafor-dia__data{ font-size:.78rem; color:var(--text-suau); font-weight:600; text-transform:uppercase; }
+  .semafor-dia__nivell{ font-size:.72rem; color:var(--text); font-weight:600; text-align:center; }
+
+  .meteo-accions{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid var(--vora);
+    font-size:.85rem;
+    color:var(--text-suau);
+  }
+
+  .btn-actualitza{
+    background:var(--uib-blau);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:8px 16px;
+    font-size:.85rem;
+    font-weight:600;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    transition:background .15s ease;
+  }
+  .btn-actualitza:hover{ background:var(--uib-blau-fosc); }
+  .btn-actualitza:focus-visible{ outline:2px solid var(--uib-blau-pantone300); outline-offset:2px; }
+  .btn-actualitza[disabled]{ opacity:.6; cursor:default; }
+
+  /* ============ LLISTA D'AVISOS ============ */
+  .avisos-panell{
+    margin-top:20px;
+  }
+  .avisos-titol{
+    font-size:.95rem;
+    font-weight:700;
+    color:var(--uib-blau-fosc);
+    margin:0 0 10px;
+  }
+
+  .estat-missatge{
+    padding:14px 16px;
+    border-radius:10px;
+    font-size:.9rem;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .estat-missatge--ok{ background:#e8f5e9; color:var(--verd); border:1px solid #c8e6c9; }
+  .estat-missatge--neutre{ background:#eef1f5; color:#57626d; border:1px solid #dde3ea; }
+  .estat-missatge--carrega{ background:#eef4fb; color:var(--uib-blau); border:1px solid #d6e6f7; }
+
+  .llista-avisos{ display:flex; flex-direction:column; gap:10px; }
+
+  .avis-targeta{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:#fbfcfe;
+    border:1px solid var(--vora);
+    border-left:5px solid var(--gris-buit);
+    border-radius:10px;
+    padding:12px 14px;
+    flex-wrap:wrap;
+  }
+  .avis-targeta[data-nivell="1"]{ border-left-color:var(--groc); }
+  .avis-targeta[data-nivell="2"]{ border-left-color:var(--taronja); }
+  .avis-targeta[data-nivell="3"]{ border-left-color:var(--vermell); }
+
+  .avis-emoji{ font-size:1.5rem; flex-shrink:0; }
+
+  .avis-info{ flex:1 1 220px; min-width:0; }
+  .avis-fenomen{ font-weight:700; font-size:.92rem; color:var(--text); }
+  .avis-zona{ font-size:.8rem; color:var(--text-suau); margin-top:1px; }
+  .avis-vigencia{ font-size:.78rem; color:var(--text-suau); margin-top:2px; }
+
+  .pastilla-nivell{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:4px 10px;
+    border-radius:999px;
+    font-size:.78rem;
+    font-weight:700;
+    white-space:nowrap;
+    color:#fff;
+  }
+  .pastilla-nivell[data-nivell="0"]{ background:var(--verd); }
+  .pastilla-nivell[data-nivell="1"]{ background:var(--groc); color:#4a3900; }
+  .pastilla-nivell[data-nivell="2"]{ background:var(--taronja); }
+  .pastilla-nivell[data-nivell="3"]{ background:var(--vermell); }
+
+  .btn-mesures{
+    background:var(--uib-blau-pantone300);
+    color:#fff;
+    text-decoration:none;
+    font-size:.8rem;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:8px;
+    white-space:nowrap;
+    flex-shrink:0;
+    transition:background .15s ease;
+  }
+  .btn-mesures:hover{ background:var(--uib-blau-fosc); }
+  .btn-mesures:focus-visible{ outline:2px solid var(--uib-blau-fosc); outline-offset:2px; }
+
+  /* ============ GRAELLA D'EINES ============ */
+  .graella-eines{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:16px;
+  }
+
+  .targeta-eina{
+    background:var(--blanc);
+    border:1px solid var(--vora);
+    border-radius:var(--radi);
+    padding:20px;
+    text-align:left;
+    cursor:pointer;
+    box-shadow:var(--ombra);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    transition:box-shadow .15s ease, transform .15s ease;
+    color:inherit;
+    text-decoration:none;
+    font-family:inherit;
+  }
+  .targeta-eina:hover, .targeta-eina:focus-visible{
+    box-shadow:var(--ombra-hover);
+    transform:translateY(-2px);
+    outline:none;
+  }
+  .targeta-eina:focus-visible{ outline:2px solid var(--uib-blau-pantone300); outline-offset:2px; }
+
+  .targeta-eina__icona{
+    width:44px;
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#eaf4fc;
+    border-radius:10px;
+    font-size:1.5rem;
+    color:var(--uib-blau);
+  }
+  .targeta-eina__titol{ font-weight:700; font-size:.98rem; color:var(--uib-blau-fosc); }
+  .targeta-eina__desc{ font-size:.83rem; color:var(--text-suau); }
+  .targeta-eina__extern-tag{
+    font-size:.7rem;
+    font-weight:700;
+    color:var(--uib-blau);
+    text-transform:uppercase;
+    letter-spacing:.4px;
+  }
+
+  /* ============ PEU ============ */
+  footer.peu{
+    background:#eef2f8;
+    border-top:1px solid var(--vora);
+    padding:24px 16px 30px;
+    text-align:center;
+    color:var(--text-suau);
+    font-size:.82rem;
+  }
+  footer.peu a{ color:var(--uib-blau-fosc); font-weight:600; text-decoration:none; margin:0 8px; }
+  footer.peu a:hover{ text-decoration:underline; }
+  footer.peu .peu-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:4px 4px; margin-bottom:10px; }
+  footer.peu .peu-versio{ color:#8b97a3; }
+
+  /* ============ VISTA D'EINA (SPA) ============ */
+  #vista-eina{
+    position:fixed;
+    inset:0;
+    background:var(--fons);
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .barra-eina{
+    background:var(--uib-blau-fosc);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 14px;
+    flex-shrink:0;
+    box-shadow:0 2px 8px rgba(0,0,0,0.18);
+    z-index:2;
+  }
+
+  .barra-eina__enrere{
+    background:rgba(255,255,255,0.12);
+    border:none;
+    color:#fff;
+    padding:7px 12px;
+    border-radius:8px;
+    font-size:.82rem;
+    font-weight:600;
+    cursor:pointer;
+    white-space:nowrap;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .barra-eina__enrere:hover{ background:rgba(255,255,255,0.22); }
+  .barra-eina__enrere:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+
+  .barra-eina__titol{
+    flex:1;
+    font-size:.9rem;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .barra-eina__nova{
+    background:var(--uib-blau-pantone300);
+    color:#fff;
+    text-decoration:none;
+    padding:7px 12px;
+    border-radius:8px;
+    font-size:.82rem;
+    font-weight:600;
+    white-space:nowrap;
+  }
+  .barra-eina__nova:hover{ background:#006c9e; }
+  .barra-eina__nova:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+
+  #vista-eina iframe{
+    flex:1;
+    width:100%;
+    border:none;
+    background:#fff;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:600px){
+    header.capcalera{ padding:16px; }
+    .capcalera__text h1{ font-size:1.05rem; }
+    .capcalera__text p{ font-size:.76rem; }
+    main{ padding:18px 12px 40px; }
+    .semafor-fila{ gap:14px; justify-content:center; }
+    .avis-targeta{ flex-direction:column; align-items:flex-start; }
+    .btn-mesures{ align-self:stretch; text-align:center; }
+    .graella-eines{ grid-template-columns:1fr; }
+    .barra-eina__titol{ font-size:.8rem; }
+    .barra-eina__nova{ display:none; }
+  }
+
+  /* Focus visible general */
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--uib-blau-pantone300); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<header class="capcalera">
+  <!--
+    Per afegir el logotip oficial de la UIB:
+    1. Deseu el fitxer (p. ex. logo-uib.svg) dins una carpeta "assets/" al costat d'aquest index.html.
+    2. Descomenteu la línia següent i ajusteu-ne la ruta relativa si cal.
+  -->
+  <!-- <img src="assets/logo-uib.svg" alt="Universitat de les Illes Balears" class="capcalera__logo"> -->
+  <div class="capcalera__text">
+    <h1>Panell de control — Protocol FMA</h1>
+    <p>Servei de Prevenció · Universitat de les Illes Balears</p>
+  </div>
+</header>
+
+<main id="vista-principal">
+
+  <!-- ===================== 1. PORTADA / ESTAT METEOROLÒGIC ===================== -->
+  <section id="estat-meteo" aria-labelledby="titol-meteo">
+    <h2 class="titol-seccio" id="titol-meteo">🌦️ Estat meteorològic — Illes Balears</h2>
+
+    <div class="panell-meteo">
+      <div class="semafor-fila" id="semafor-cercles" aria-label="Semàfor de nivells d'avís meteorològic per als propers 3 dies" role="group">
+        <!-- Cercles generats per JS -->
+      </div>
+
+      <div class="meteo-accions">
+        <button type="button" class="btn-actualitza" id="btn-actualitza">🔄 Actualitza</button>
+        <span id="text-ultima-actualitzacio">Darrera actualització: —</span>
+      </div>
+
+      <div class="avisos-panell">
+        <h3 class="avisos-titol">Avisos actius a les Illes Balears</h3>
+        <div id="contenidor-avisos">
+          <div class="estat-missatge estat-missatge--carrega">⏳ Carregant avisos meteorològics…</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 2. GRAELLA D'EINES ===================== -->
+  <section id="eines" aria-labelledby="titol-eines">
+    <h2 class="titol-seccio" id="titol-eines">🧰 Eines del Protocol FMA</h2>
+    <div class="graella-eines">
+
+      <a class="targeta-eina" href="#eina/mesures">
+        <div class="targeta-eina__icona">📋</div>
+        <div class="targeta-eina__titol">Aplicatiu de mesures preventives</div>
+        <div class="targeta-eina__desc">Mesures recomanades segons el fenomen i el nivell d'alerta.</div>
+      </a>
+
+      <a class="targeta-eina" href="#eina/tipus-fma">
+        <div class="targeta-eina__icona">🌡️</div>
+        <div class="targeta-eina__titol">Tipus de FMA i nivells d'alerta</div>
+        <div class="targeta-eina__desc">Correspondència entre nivells AEMET i METEOBAL.</div>
+      </a>
+
+      <a class="targeta-eina" href="#eina/flux-actuacio">
+        <div class="targeta-eina__icona">🔀</div>
+        <div class="targeta-eina__titol">Flux d'actuació davant FMA v2.0</div>
+        <div class="targeta-eina__desc">Guia visual de les fases d'actuació del protocol.</div>
+      </a>
+
+      <a class="targeta-eina" href="#eina/diagrama-fases">
+        <div class="targeta-eina__icona">🗺️</div>
+        <div class="targeta-eina__titol">Diagrama de fases del protocol</div>
+        <div class="targeta-eina__desc">Diagrama de flux de les fases del protocol (punt 5).</div>
+      </a>
+
+      <a class="targeta-eina" href="#eina/matriu-raci">
+        <div class="targeta-eina__icona">👥</div>
+        <div class="targeta-eina__titol">Matriu RACI de responsabilitats v2.0</div>
+        <div class="targeta-eina__desc">Qui és responsable, aprovador, consultat o informat.</div>
+      </a>
+
+      <a class="targeta-eina" href="https://portal.uib.cat/web/prevencio/especialitats/emergencies/avisos-meteorologics-uib" target="_blank" rel="noopener">
+        <div class="targeta-eina__icona">🔗</div>
+        <div class="targeta-eina__titol">Portal d'avisos del Servei de Prevenció</div>
+        <div class="targeta-eina__desc">Pàgina oficial UIB amb tota la informació del protocol.</div>
+        <div class="targeta-eina__extern-tag">Obre en pestanya nova ↗</div>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="peu">
+  <div class="peu-links">
+    <a href="https://www.aemet.es/ca/eltiempo/prediccion/avisos?w=hoy&amp;p=64" target="_blank" rel="noopener">AEMET Illes Balears ↗</a>
+    ·
+    <a href="tel:112">112 Illes Balears</a>
+    ·
+    <a href="https://portal.uib.cat/web/prevencio/" target="_blank" rel="noopener">Servei de Prevenció UIB ↗</a>
+  </div>
+  <div class="peu-versio">v1.0 · juliol 2026</div>
+</footer>
+
+<!-- ===================== VISTA D'EINA (iframe a pantalla quasi completa) ===================== -->
+<div id="vista-eina" class="oculta" role="region" aria-label="Visor d'eina del Protocol FMA">
+  <div class="barra-eina">
+    <button type="button" class="barra-eina__enrere" id="btn-enrere">← Torna al panell</button>
+    <span class="barra-eina__titol" id="titol-eina-actual">Eina</span>
+    <a class="barra-eina__nova" id="link-eina-nova" href="#" target="_blank" rel="noopener">Obrir en pestanya nova ↗</a>
+  </div>
+  <iframe id="iframe-eina" title="Contingut de l'eina" src="about:blank"></iframe>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================================================================== *
+   * CONFIGURACIÓ
+   * ================================================================== */
+  var CONFIG = {
+    proxyUrl: 'https://aemet-proxy-uib.prevencio-uib.workers.dev', // Worker ja desplegat (CORS: *)
+    demoMode: false,   // true = dades simulades (per provar en local sense connexió)
+    dies: 3,
+    refreshMinutes: 30
+  };
+
+  /* ================================================================== *
+   * DADES DEMO (basades en datos-demo.json del sistema d'avisos UIB)
+   * ================================================================== */
+  var DEMO_DATA = {
+    generatedAt: '2026-06-10T07:30:00Z',
+    avisos: [
+      {
+        id: 'demo-001', dia: '2026-06-10', fenomenKey: 'pluges', nivell: 3,
+        zona: 'Serra de Tramuntana', illa: 'mallorca',
+        inici: '2026-06-10T06:00:00+02:00', fi: '2026-06-10T18:00:00+02:00'
+      },
+      {
+        id: 'demo-002', dia: '2026-06-10', fenomenKey: 'vent', nivell: 2,
+        zona: 'Mallorca Nord', illa: 'mallorca',
+        inici: '2026-06-10T10:00:00+02:00', fi: '2026-06-10T22:00:00+02:00'
+      },
+      {
+        id: 'demo-003', dia: '2026-06-10', fenomenKey: 'tormenta', nivell: 1,
+        zona: 'Menorca', illa: 'menorca',
+        inici: '2026-06-10T14:00:00+02:00', fi: '2026-06-11T00:00:00+02:00'
+      },
+      {
+        id: 'demo-004', dia: '2026-06-11', fenomenKey: 'calor', nivell: 2,
+        zona: 'Mallorca Sud', illa: 'mallorca',
+        inici: '2026-06-11T12:00:00+02:00', fi: '2026-06-11T20:00:00+02:00'
+      }
+    ]
+  };
+  // Nivells simulats del semàfor per als propers dies en mode demo (avui, demà, demà passat)
+  var DEMO_NIVELLS_SEMAFOR = [3, 1, 0];
+
+  /* ================================================================== *
+   * TAULES DE CLASSIFICACIÓ (fenòmens, nivells, emojis)
+   * ================================================================== */
+  var FENOMENS = {
+    pluges:   { nom: 'Pluges intenses / Inundacions', emoji: '🌧️' },
+    calor:    { nom: 'Ones de calor', emoji: '🔥' },
+    vent:     { nom: 'Vents forts', emoji: '💨' },
+    tormenta: { nom: 'Tempestes elèctriques', emoji: '⛈️' },
+    costaner: { nom: 'Fenòmens costaners', emoji: '🌊' },
+    fred:     { nom: 'Fred extrem / Neu o Gel', emoji: '❄️' }
+  };
+
+  var NOM_NIVELL = { 0: 'Sense avís', 1: 'Groc', 2: 'Taronja', 3: 'Vermell' };
+
+  /* ================================================================== *
+   * UTILITATS XML / CAP (adaptat de banner.js i fragment.js)
+   * ================================================================== */
+
+  function localName(node) {
+    var name = node.nodeName || node.tagName || '';
+    var idx = name.indexOf(':');
+    return idx === -1 ? name : name.substring(idx + 1);
+  }
+
+  function getChildren(parent, tagName) {
+    var result = [];
+    if (!parent) return result;
+    var children = parent.children || parent.childNodes;
+    for (var i = 0; i < children.length; i++) {
+      var node = children[i];
+      if (node.nodeType === 1 && localName(node) === tagName) {
+        result.push(node);
+      }
+    }
+    return result;
+  }
+
+  function getChildText(parent, tagName) {
+    if (!parent) return '';
+    var children = parent.children || parent.childNodes;
+    for (var i = 0; i < children.length; i++) {
+      var node = children[i];
+      if (node.nodeType === 1 && localName(node) === tagName) {
+        return (node.textContent || '').trim();
+      }
+    }
+    return '';
+  }
+
+  function getParameterValue(infoNode, valueName) {
+    var params = getChildren(infoNode, 'parameter');
+    for (var i = 0; i < params.length; i++) {
+      var name = getChildText(params[i], 'valueName');
+      if (name && name.toLowerCase().indexOf(valueName.toLowerCase()) !== -1) {
+        return getChildText(params[i], 'value');
+      }
+    }
+    return '';
+  }
+
+  function classificaNivell(nivellText, severityText) {
+    var t = (nivellText || '').toLowerCase();
+    if (t.indexOf('rojo') !== -1 || t.indexOf('vermell') !== -1) return 3;
+    if (t.indexOf('naranja') !== -1 || t.indexOf('taronja') !== -1) return 2;
+    if (t.indexOf('amarillo') !== -1 || t.indexOf('groc') !== -1) return 1;
+    if (t.indexOf('verde') !== -1 || t.indexOf('verd') !== -1) return 0;
+
+    var s = (severityText || '').toLowerCase();
+    if (s === 'extreme') return 3;
+    if (s === 'severe') return 2;
+    if (s === 'moderate') return 1;
+    return 0;
+  }
+
+  function classificaFenomen(eventText) {
+    var t = (eventText || '').toLowerCase();
+    if (t.indexOf('costero') !== -1 || t.indexOf('costaner') !== -1 || t.indexOf('costera') !== -1) return 'costaner';
+    if (t.indexOf('lluvia') !== -1 || t.indexOf('pluja') !== -1 || t.indexOf('inunda') !== -1) return 'pluges';
+    if (t.indexOf('tormenta') !== -1 || t.indexOf('tempesta') !== -1 || t.indexOf('eléctric') !== -1 || t.indexOf('electric') !== -1) return 'tormenta';
+    if (t.indexOf('viento') !== -1 || t.indexOf('vent') !== -1) return 'vent';
+    if (t.indexOf('calor') !== -1 || t.indexOf('altas temperaturas') !== -1 ||
+        t.indexOf('altes temperatures') !== -1 || t.indexOf('temperaturas máximas') !== -1 ||
+        t.indexOf('temperaturas maximas') !== -1 || t.indexOf('temperatures màximes') !== -1 ||
+        t.indexOf('temperatures maximes') !== -1) return 'calor';
+    if (t.indexOf('nieve') !== -1 || t.indexOf('neu') !== -1 || t.indexOf('helada') !== -1 ||
+        t.indexOf('gel') !== -1 || t.indexOf('bajas temperaturas') !== -1 || t.indexOf('baixes temperatures') !== -1 ||
+        t.indexOf('temperaturas mínimas') !== -1 || t.indexOf('temperaturas minimas') !== -1 ||
+        t.indexOf('temperatures mínimes') !== -1 || t.indexOf('temperatures minimes') !== -1 ||
+        t.indexOf('frío') !== -1 || t.indexOf('fred') !== -1) return 'fred';
+    return null;
+  }
+
+  function classificaZona(areaDesc) {
+    var t = (areaDesc || '').toLowerCase();
+    if (t.indexOf('tramontana') !== -1 || t.indexOf('tramuntana') !== -1) return { zona: 'Serra de Tramuntana', illa: 'mallorca' };
+    if (t.indexOf('menorca') !== -1) return { zona: 'Menorca', illa: 'menorca' };
+    if (t.indexOf('ibiza') !== -1 || t.indexOf('eivissa') !== -1 || t.indexOf('formentera') !== -1) return { zona: 'Eivissa i Formentera', illa: 'eivissa' };
+    if (t.indexOf('mallorca') !== -1) {
+      if (t.indexOf('sur') !== -1 || t.indexOf('sud') !== -1) return { zona: 'Mallorca Sud', illa: 'mallorca' };
+      return { zona: 'Mallorca Nord', illa: 'mallorca' };
+    }
+    return { zona: areaDesc || '—', illa: 'totes' };
+  }
+
+  // Parseja el XML CAP i retorna: { avisos: [...], nivellsPerDia: {'AAAA-MM-DD': nivellMax} }
+  function parseCAP(xmlText) {
+    var parser = new DOMParser();
+    var xml = parser.parseFromString(xmlText, 'text/xml');
+    if (xml.querySelector('parsererror')) {
+      throw new Error('XML CAP invàlid');
+    }
+
+    var infos = getChildren(xml.documentElement, 'info');
+    var avisos = [];
+    var nivellsPerDia = {};
+
+    for (var i = 0; i < infos.length; i++) {
+      var info = infos[i];
+      var language = getChildText(info, 'language').toLowerCase();
+      if (language && language.indexOf('es') !== 0) continue;
+
+      var onset = getChildText(info, 'onset');
+      var expires = getChildText(info, 'expires');
+      var eventText = getChildText(info, 'event');
+      var severity = getChildText(info, 'severity');
+      var nivellText = getParameterValue(info, 'AEMET-Nivel Aviso') || getParameterValue(info, 'Nivel');
+      var nivell = classificaNivell(nivellText, severity);
+      var fenomenKey = classificaFenomen(eventText);
+
+      var dia = (onset || '').substring(0, 10);
+
+      var areas = getChildren(info, 'area');
+      for (var j = 0; j < areas.length; j++) {
+        var areaDesc = getChildText(areas[j], 'areaDesc');
+        var zonaInfo = classificaZona(areaDesc);
+
+        // Acumula el nivell màxim per dia (per al semàfor), independentment del fenomen
+        if (dia) {
+          if (nivellsPerDia[dia] === undefined || nivell > nivellsPerDia[dia]) {
+            nivellsPerDia[dia] = nivell;
+          }
+        }
+
+        // Nomes s'afegeix a la llista d'avisos actius si es un fenomen reconegut i te risc (>=1)
+        if (fenomenKey && nivell >= 1) {
+          avisos.push({
+            id: 'aemet-' + i + '-' + j,
+            dia: dia,
+            fenomenKey: fenomenKey,
+            nivell: nivell,
+            zona: zonaInfo.zona,
+            illa: zonaInfo.illa,
+            inici: onset,
+            fi: expires
+          });
+        }
+      }
+    }
+
+    return { avisos: avisos, nivellsPerDia: nivellsPerDia };
+  }
+
+  /* ================================================================== *
+   * DATES
+   * ================================================================== */
+
+  function diaLocalISO(date) {
+    var y = date.getFullYear();
+    var m = ('0' + (date.getMonth() + 1)).slice(-2);
+    var d = ('0' + date.getDate()).slice(-2);
+    return y + '-' + m + '-' + d;
+  }
+
+  function finestraDies(n) {
+    var base = new Date();
+    base.setHours(0, 0, 0, 0);
+    var dies = [];
+    for (var i = 0; i < n; i++) {
+      var d = new Date(base);
+      d.setDate(base.getDate() + i);
+      dies.push(d);
+    }
+    return dies;
+  }
+
+  function formatDiaCurt(date) {
+    return date.toLocaleDateString('ca-ES', { weekday: 'short', day: '2-digit', month: '2-digit' });
+  }
+
+  function formatHora(isoString) {
+    if (!isoString) return '—';
+    var date = new Date(isoString);
+    if (isNaN(date.getTime())) return '—';
+    return date.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function formatDataHora(isoString) {
+    if (!isoString) return '—';
+    var date = new Date(isoString);
+    if (isNaN(date.getTime())) return '—';
+    return date.toLocaleDateString('ca-ES', { day: '2-digit', month: '2-digit' }) + ' ' +
+      date.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function formatHHMM(date) {
+    return date.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  /* ================================================================== *
+   * ESTAT
+   * ================================================================== */
+  var state = {
+    avisos: [],
+    nivellsPerDia: {},
+    carregant: false,
+    error: false
+  };
+
+  var elSemafor = document.getElementById('semafor-cercles');
+  var elContenidorAvisos = document.getElementById('contenidor-avisos');
+  var elTextActualitzacio = document.getElementById('text-ultima-actualitzacio');
+  var elBtnActualitza = document.getElementById('btn-actualitza');
+
+  /* ================================================================== *
+   * RENDER: SEMÀFOR
+   * ================================================================== */
+  function renderSemafor() {
+    elSemafor.innerHTML = '';
+    var dies = finestraDies(CONFIG.dies);
+
+    dies.forEach(function (dataDia) {
+      var iso = diaLocalISO(dataDia);
+      var nivell;
+      if (state.error) {
+        nivell = null;
+      } else {
+        nivell = state.nivellsPerDia[iso] !== undefined ? state.nivellsPerDia[iso] : 0;
+      }
+
+      var wrap = document.createElement('div');
+      wrap.className = 'semafor-dia';
+
+      var cercle = document.createElement('span');
+      var etiquetaNivell;
+      if (nivell === null) {
+        cercle.className = 'semafor-dia__cercle semafor-dia__cercle--buit';
+        etiquetaNivell = 'sense dades';
+      } else {
+        cercle.className = 'semafor-dia__cercle semafor-dia__cercle--' + nivell;
+        etiquetaNivell = NOM_NIVELL[nivell];
+      }
+      var dataText = formatDiaCurt(dataDia);
+      cercle.setAttribute('role', 'img');
+      cercle.setAttribute('aria-label', dataText + ': ' + etiquetaNivell);
+      cercle.setAttribute('title', dataText + ': ' + etiquetaNivell);
+
+      var data = document.createElement('span');
+      data.className = 'semafor-dia__data';
+      data.textContent = dataText;
+
+      var nivellText = document.createElement('span');
+      nivellText.className = 'semafor-dia__nivell';
+      nivellText.textContent = etiquetaNivell;
+
+      wrap.appendChild(cercle);
+      wrap.appendChild(data);
+      wrap.appendChild(nivellText);
+      elSemafor.appendChild(wrap);
+    });
+  }
+
+  /* ================================================================== *
+   * RENDER: LLISTA D'AVISOS ACTIUS
+   * ================================================================== */
+  function renderAvisos() {
+    elContenidorAvisos.innerHTML = '';
+
+    if (state.carregant) {
+      var elCarrega = document.createElement('div');
+      elCarrega.className = 'estat-missatge estat-missatge--carrega';
+      elCarrega.textContent = '⏳ Carregant avisos meteorològics…';
+      elContenidorAvisos.appendChild(elCarrega);
+      return;
+    }
+
+    if (state.error) {
+      var elError = document.createElement('div');
+      elError.className = 'estat-missatge estat-missatge--neutre';
+      elError.textContent = '⚪ Els avisos meteorològics no estan disponibles en aquest moment. Consulteu directament el web d\'AEMET.';
+      elContenidorAvisos.appendChild(elError);
+      return;
+    }
+
+    if (!state.avisos || state.avisos.length === 0) {
+      var elOk = document.createElement('div');
+      elOk.className = 'estat-missatge estat-missatge--ok';
+      elOk.textContent = '✅ Sense avisos actius';
+      elContenidorAvisos.appendChild(elOk);
+      return;
+    }
+
+    var llista = document.createElement('div');
+    llista.className = 'llista-avisos';
+
+    // Ordena per dia i per nivell descendent
+    var avisosOrdenats = state.avisos.slice().sort(function (a, b) {
+      if (a.dia !== b.dia) return a.dia < b.dia ? -1 : 1;
+      return b.nivell - a.nivell;
+    });
+
+    avisosOrdenats.forEach(function (avis) {
+      var fenomen = FENOMENS[avis.fenomenKey] || { nom: avis.fenomenKey || 'Fenomen', emoji: '⚠️' };
+
+      var targeta = document.createElement('div');
+      targeta.className = 'avis-targeta';
+      targeta.setAttribute('data-nivell', String(avis.nivell));
+
+      var emoji = document.createElement('span');
+      emoji.className = 'avis-emoji';
+      emoji.setAttribute('aria-hidden', 'true');
+      emoji.textContent = fenomen.emoji;
+
+      var info = document.createElement('div');
+      info.className = 'avis-info';
+
+      var titolFenomen = document.createElement('div');
+      titolFenomen.className = 'avis-fenomen';
+      titolFenomen.textContent = fenomen.nom;
+
+      var zona = document.createElement('div');
+      zona.className = 'avis-zona';
+      zona.textContent = avis.zona || '—';
+
+      var vigencia = document.createElement('div');
+      vigencia.className = 'avis-vigencia';
+      vigencia.textContent = 'Vigència: ' + formatHora(avis.inici) + ' – ' + formatHora(avis.fi);
+
+      info.appendChild(titolFenomen);
+      info.appendChild(zona);
+      info.appendChild(vigencia);
+
+      var pastilla = document.createElement('span');
+      pastilla.className = 'pastilla-nivell';
+      pastilla.setAttribute('data-nivell', String(avis.nivell));
+      pastilla.textContent = NOM_NIVELL[avis.nivell];
+
+      var btnMesures = document.createElement('a');
+      btnMesures.className = 'btn-mesures';
+      btnMesures.href = '#eina/mesures';
+      btnMesures.textContent = 'Veure mesures recomanades';
+
+      targeta.appendChild(emoji);
+      targeta.appendChild(info);
+      targeta.appendChild(pastilla);
+      targeta.appendChild(btnMesures);
+
+      llista.appendChild(targeta);
+    });
+
+    elContenidorAvisos.appendChild(llista);
+  }
+
+  /* ================================================================== *
+   * CÀRREGA DE DADES
+   * ================================================================== */
+  function carregaDades() {
+    if (CONFIG.demoMode) {
+      var nivellsPerDia = {};
+      var dies = finestraDies(CONFIG.dies);
+      for (var i = 0; i < dies.length; i++) {
+        nivellsPerDia[diaLocalISO(dies[i])] = DEMO_NIVELLS_SEMAFOR[i] !== undefined ? DEMO_NIVELLS_SEMAFOR[i] : 0;
+      }
+      return Promise.resolve({ avisos: DEMO_DATA.avisos, nivellsPerDia: nivellsPerDia });
+    }
+
+    return fetch(CONFIG.proxyUrl, { headers: { 'Accept': 'application/xml, text/xml, */*' } })
+      .then(function (resp) {
+        if (!resp.ok) throw new Error('Resposta del proxy no vàlida: ' + resp.status);
+        return resp.text();
+      })
+      .then(function (xmlText) {
+        return parseCAP(xmlText);
+      });
+  }
+
+  function actualitza() {
+    state.carregant = true;
+    state.error = false;
+    elBtnActualitza.setAttribute('disabled', 'disabled');
+    renderAvisos();
+
+    carregaDades()
+      .then(function (resultat) {
+        state.avisos = resultat.avisos || [];
+        state.nivellsPerDia = resultat.nivellsPerDia || {};
+        state.carregant = false;
+        state.error = false;
+        renderSemafor();
+        renderAvisos();
+        elTextActualitzacio.textContent = 'Darrera actualització: ' + formatHHMM(new Date()) +
+          (CONFIG.demoMode ? ' (mode demo)' : '');
+      })
+      .catch(function (err) {
+        // eslint-disable-next-line no-console
+        console.error('[dashboard-fma] Error carregant avisos meteorològics:', err);
+        state.carregant = false;
+        state.error = true;
+        state.avisos = [];
+        state.nivellsPerDia = {};
+        renderSemafor();
+        renderAvisos();
+        elTextActualitzacio.textContent = 'Darrera actualització: no disponible';
+      })
+      .then(function () {
+        elBtnActualitza.removeAttribute('disabled');
+      });
+  }
+
+  elBtnActualitza.addEventListener('click', actualitza);
+
+  /* ================================================================== *
+   * SPA — HASH ROUTING PER A LES EINES
+   * ================================================================== */
+  var EINES = {
+    'mesures': { titol: 'Aplicatiu de mesures preventives', fitxer: 'eines/mesures.html' },
+    'tipus-fma': { titol: 'Tipus de FMA i nivells d\'alerta', fitxer: 'eines/tipus-fma.html' },
+    'flux-actuacio': { titol: 'Flux d\'actuació davant FMA v2.0', fitxer: 'eines/flux-actuacio.html' },
+    'diagrama-fases': { titol: 'Diagrama de fases del protocol', fitxer: 'eines/diagrama-fases.html' },
+    'matriu-raci': { titol: 'Matriu RACI de responsabilitats v2.0', fitxer: 'eines/matriu-raci.html' }
+  };
+
+  var elVistaPrincipal = document.getElementById('vista-principal');
+  var elFooter = document.querySelector('footer.peu');
+  var elVistaEina = document.getElementById('vista-eina');
+  var elIframeEina = document.getElementById('iframe-eina');
+  var elTitolEinaActual = document.getElementById('titol-eina-actual');
+  var elLinkEinaNova = document.getElementById('link-eina-nova');
+  var elBtnEnrere = document.getElementById('btn-enrere');
+
+  function mostraEina(clauEina) {
+    var eina = EINES[clauEina];
+    if (!eina) {
+      // Clau desconeguda: torna al panell principal
+      window.location.hash = '';
+      return;
+    }
+    elTitolEinaActual.textContent = eina.titol;
+    elLinkEinaNova.href = eina.fitxer;
+    if (elIframeEina.getAttribute('data-carregat') !== eina.fitxer) {
+      elIframeEina.src = eina.fitxer;
+      elIframeEina.setAttribute('data-carregat', eina.fitxer);
+    }
+    elVistaEina.classList.remove('oculta');
+    elVistaPrincipal.classList.add('oculta');
+    elFooter.classList.add('oculta');
+    document.title = eina.titol + ' — Protocol FMA · UIB';
+    window.scrollTo(0, 0);
+  }
+
+  function mostraPanell() {
+    elVistaEina.classList.add('oculta');
+    elVistaPrincipal.classList.remove('oculta');
+    elFooter.classList.remove('oculta');
+    document.title = 'Panell de control — Protocol FMA · UIB';
+  }
+
+  function gestionaHash() {
+    var hash = window.location.hash || '';
+    var m = hash.match(/^#eina\/([a-z0-9-]+)/i);
+    if (m) {
+      mostraEina(m[1]);
+    } else {
+      mostraPanell();
+    }
+  }
+
+  elBtnEnrere.addEventListener('click', function () {
+    // Neteja el hash; l'esdeveniment hashchange s'encarrega de mostrar el panell
+    if (window.location.hash) {
+      window.history.back();
+    } else {
+      mostraPanell();
+    }
+  });
+
+  window.addEventListener('hashchange', gestionaHash);
+
+  /* ================================================================== *
+   * ARRENCADA
+   * ================================================================== */
+  try {
+    renderSemafor();
+    renderAvisos();
+    actualitza();
+    gestionaHash();
+
+    if (!CONFIG.demoMode && CONFIG.refreshMinutes > 0) {
+      setInterval(actualitza, CONFIG.refreshMinutes * 60 * 1000);
+    }
+  } catch (errArrencada) {
+    // eslint-disable-next-line no-console
+    console.error('[dashboard-fma] Error inesperat en arrencar el panell:', errArrencada);
+  }
+
+})();
+</script>
+
+</body>
+</html>

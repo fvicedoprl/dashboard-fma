@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux d'Actuació FMA - UIB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .node-card {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .node-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .modal-enter {
+            animation: modalFadeIn 0.3s ease-out forwards;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .connector-line {
+            background-color: #cbd5e1;
+        }
+        .connector-arrow {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 10px solid #cbd5e1;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Capçalera -->
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">Flux d'Actuació davant FMA a la UIB</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Guia visual interactiva del protocol oficial. Fes clic a cada fase per veure'n els detalls operatius i de comunicació.</p>
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    Protocol Oficial 2026
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    Didàctic i Operatiu
+                </span>
+            </div>
+        </div>
+
+        <!-- Diagrama -->
+        <div class="flex flex-col items-center">
+
+            <!-- Fase 1 -->
+            <div onclick="openModal('vigilancia')" class="node-card w-full max-w-sm p-4 rounded-xl border-2 border-blue-500 bg-blue-50 text-blue-800 text-center shadow-md">
+                <div class="mb-2 flex justify-center"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg></div>
+                <h3 class="font-bold text-lg leading-tight">Fase 1: Vigilància i Prealerta</h3>
+                <p class="text-xs mt-1 font-medium opacity-80">SPREV / Persona de Guàrdia</p>
+                <div class="mt-3 text-[10px] font-bold uppercase tracking-widest opacity-60">Clic per a detalls</div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div class="w-0.5 h-8 connector-line"></div>
+                <div class="connector-arrow"></div>
+            </div>
+
+            <!-- Fase 2 -->
+            <div onclick="openModal('decisio')" class="node-card w-full max-w-sm p-4 rounded-xl border-2 border-red-500 bg-red-50 text-red-800 text-center shadow-md">
+                <div class="mb-2 flex justify-center"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div>
+                <h3 class="font-bold text-lg leading-tight">Fase 2: Decisió Estratègica</h3>
+                <p class="text-xs mt-1 font-medium opacity-80">Gabinet de Crisi de la UIB</p>
+                <div class="mt-3 text-[10px] font-bold uppercase tracking-widest opacity-60">Clic per a detalls</div>
+            </div>
+
+            <!-- Divisió de camins -->
+            <div class="relative w-full flex flex-col items-center">
+                <div class="w-0.5 h-6 connector-line"></div>
+                <div class="w-full md:w-3/4 h-0.5 connector-line"></div>
+                <div class="flex justify-between w-full md:w-3/4">
+                    <div class="w-0.5 h-6 connector-line"></div>
+                    <div class="w-0.5 h-6 connector-line"></div>
+                </div>
+            </div>
+
+            <!-- Branques paral·leles -->
+            <div class="flex flex-col md:flex-row gap-8 w-full">
+                <!-- Comunicació -->
+                <div class="flex-1 flex flex-col items-center">
+                    <div onclick="openModal('comunicacio')" class="node-card w-full p-4 rounded-xl border-2 border-green-500 bg-green-50 text-green-800 text-center shadow-md">
+                        <div class="mb-2 flex justify-center"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg></div>
+                        <h3 class="font-bold text-base leading-tight">Ordre de Comunicació</h3>
+                        <p class="text-xs mt-1 font-medium opacity-80">Servei de Comunicació</p>
+                        <div class="mt-3 text-[10px] font-bold uppercase tracking-widest opacity-60">Clic per a detalls</div>
+                    </div>
+                    <div class="w-0.5 h-full border-l-2 border-dashed border-slate-300"></div>
+                </div>
+
+                <!-- Operativa -->
+                <div class="flex-1 flex flex-col items-center">
+                    <div onclick="openModal('operativa')" class="node-card w-full p-4 rounded-xl border-2 border-amber-500 bg-amber-50 text-amber-800 text-center shadow-md">
+                        <div class="mb-2 flex justify-center"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
+                        <h3 class="font-bold text-base leading-tight">Ordre Operativa</h3>
+                        <p class="text-xs mt-1 font-medium opacity-80">Vicerectorat competent / STI</p>
+                        <div class="mt-3 text-[10px] font-bold uppercase tracking-widest opacity-60">Clic per a detalls</div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-0.5 h-8 connector-line"></div>
+                        <div class="connector-arrow"></div>
+                    </div>
+                    <div onclick="openModal('execucio')" class="node-card w-full p-4 rounded-xl border-2 border-purple-500 bg-purple-50 text-purple-800 text-center shadow-md">
+                        <div class="mb-2 flex justify-center"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
+                        <h3 class="font-bold text-base leading-tight">Fase 3: Execució Local (Edifici)</h3>
+                        <p class="text-xs mt-1 font-medium opacity-80">Cap d'Emergències de l'Edifici</p>
+                        <div class="mt-3 text-[10px] font-bold uppercase tracking-widest opacity-60">Clic per a detalls</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unió de camins -->
+            <div class="relative w-full flex flex-col items-center">
+                <div class="flex justify-between w-full md:w-3/4">
+                    <div class="w-0.5 h-10 border-l-2 border-dashed border-slate-300"></div>
+                    <div class="w-0.5 h-10 connector-line"></div>
+                </div>
+                <div class="w-full md:w-3/4 h-0.5 connector-line"></div>
+                <div class="flex flex-col items-center">
+                    <div class="w-0.5 h-8 connector-line"></div>
+                    <div class="connector-arrow"></div>
+                </div>
+            </div>
+
+            <!-- Fase Avaluació -->
+            <div onclick="openModal('postincident')" class="node-card w-full max-w-sm p-4 rounded-xl border-2 border-slate-500 bg-slate-50 text-slate-800 text-center shadow-md">
+                <div class="mb-2 flex justify-center"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                <h3 class="font-bold text-lg leading-tight">Desactivació i Avaluació</h3>
+                <p class="text-xs mt-1 font-medium opacity-80">SPREV / Gabinet de Crisi</p>
+                <div class="mt-3 text-[10px] font-bold uppercase tracking-widest opacity-60">Clic per a detalls</div>
+            </div>
+
+        </div>
+
+        <!-- Peu de pàgina -->
+        <div class="mt-12 p-6 bg-white rounded-xl border border-slate-200 shadow-sm text-sm text-slate-500">
+            <h3 class="font-bold text-slate-800 mb-2 flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Notes sobre el Protocol
+            </h3>
+            <p>En cas de dubte sobre l'activació o aplicació de mesures, prevaldran sempre les indicacions del <strong>Gabinet de Crisi</strong>. La seguretat de la comunitat universitària és la màxima prioritat.</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-backdrop" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Capçalera Modal -->
+            <div id="modal-header" class="p-6 border-b flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div id="modal-icon"></div>
+                    <h2 id="modal-title" class="text-xl font-bold"></h2>
+                </div>
+                <button onclick="closeModal()" class="p-1 hover:bg-black/10 rounded-full transition-colors text-slate-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Cos Modal -->
+            <div class="p-6 overflow-y-auto space-y-6">
+                <section>
+                    <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Descripció</h3>
+                    <p id="modal-description" class="text-slate-700 leading-relaxed"></p>
+                </section>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <section class="bg-slate-50 p-4 rounded-lg">
+                        <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Responsable</h4>
+                        <p id="modal-responsible" class="font-medium text-slate-800"></p>
+                    </section>
+                    <section class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="text-sm font-semibold text-red-500 uppercase tracking-wider mb-2">Desencadenant</h4>
+                        <p id="modal-trigger" class="font-medium text-red-800"></p>
+                    </section>
+                </div>
+
+                <section>
+                    <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Accions Clau</h4>
+                    <ul id="modal-actions" class="grid grid-cols-1 gap-2"></ul>
+                </section>
+
+                <section class="border-t pt-4">
+                    <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Flux de Comunicació</h4>
+                    <p id="modal-communication" class="text-slate-600 text-sm italic"></p>
+                </section>
+            </div>
+
+            <!-- Peu Modal -->
+            <div class="p-4 bg-slate-50 border-t text-center">
+                <button onclick="closeModal()" class="px-6 py-2 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-colors shadow-sm">Entès, tancar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const phases = {
+            vigilancia: {
+                title: 'Fase 1: Vigilància i Prealerta',
+                responsible: 'SPREV / Persona de Guàrdia',
+                trigger: 'AEMET activa avís (Groc, Taronja o Vermell) que afecta la UIB.',
+                description: 'Monitoratge actiu de les fonts oficials i eines de suport per detectar riscos potencials.',
+                actions: [
+                    'Verificar avisos AEMET, 112 i RiscBal.',
+                    'Consulta de models d\'alta resolució de MeteoUIB.',
+                    'Valoració inicial del risc segons l\'Annex 7.',
+                    'Comunicació immediata a Gerència i Vicerectorat competent.'
+                ],
+                communication: 'Grup de WhatsApp d\'emergències i contacte directe amb el nucli del Gabinet de Crisi.',
+                color: 'bg-blue-50 border-blue-500 text-blue-800'
+            },
+            decisio: {
+                title: 'Fase 2: Decisió Estratègica',
+                responsible: 'Gabinet de Crisi de la UIB',
+                trigger: 'Recepció de prealerta taronja/vermella (automàtica) o groga crítica.',
+                description: 'Presa de decisions d\'alt nivell per protegir la comunitat i les instal·lacions.',
+                actions: [
+                    'Convocatòria del Gabinet de Crisi.',
+                    'Avaluació tècnica (SPREV + experts MeteoUIB i RiscBal).',
+                    'Decisió sobre suspensió d\'activitats (parcial/total).',
+                    'Ordre de tancament d\'instal·lacions si cal.'
+                ],
+                communication: 'Emissió d\'ordres oficials cap a Comunicació i Operativa.',
+                color: 'bg-red-50 border-red-500 text-red-800'
+            },
+            comunicacio: {
+                title: 'Ordre de Comunicació',
+                responsible: 'Servei de Comunicació',
+                trigger: 'Instrucció directa del Gabinet de Crisi.',
+                description: 'Difusió oficial i centralitzada de la informació per evitar rumors.',
+                actions: [
+                    'Activació del banc de plantilles pre-aprovades.',
+                    'Publicació a web UIB (bàner), correu massiu i UIBapp.',
+                    'Actualització xarxes socials (#MeteoUIB).',
+                    'Atenció a mitjans de comunicació.'
+                ],
+                communication: 'Missatges clars a PDI, PTGAS, Alumnat i empreses externes.',
+                color: 'bg-green-50 border-green-500 text-green-800'
+            },
+            operativa: {
+                title: 'Ordre Operativa',
+                responsible: 'Vicerectorat competent / STI',
+                trigger: 'Instrucció directa del Gabinet de Crisi.',
+                description: 'Coordinació física de les mesures de seguretat al campus.',
+                actions: [
+                    'Neteja preventiva d\'embornals i desguassos.',
+                    'Assegurament de mobiliari i elements mòbils.',
+                    'Control d\'accessos i senyalització de zones de risc.',
+                    'Preparació d\'equips de bombeig o fundents.'
+                ],
+                communication: 'Instruccions tècniques a manteniment, seguretat i caps d\'emergència.',
+                color: 'bg-amber-50 border-amber-500 text-amber-800'
+            },
+            execucio: {
+                title: 'Fase 3: Execució Local (Edifici)',
+                responsible: 'Cap d\'Emergències de l\'Edifici',
+                trigger: 'Recepció d\'ordre operativa o comunicat massiu.',
+                description: 'Implementació final de les mesures dins de cada edifici universitari.',
+                actions: [
+                    'Activació de l\'Equip d\'Intervenció (edifici).',
+                    'Activació de l\'Equip d\'Evacuació/Confinament (persones).',
+                    'Tancament de finestres i verificació de subministraments.',
+                    'Suport específic a Persones amb Mobilitat Reduïda (PMR).'
+                ],
+                communication: 'Instruccions directes a usuaris i feedback a l\'Administració de Centre.',
+                color: 'bg-purple-50 border-purple-500 text-purple-800'
+            },
+            postincident: {
+                title: 'Desactivació i Avaluació',
+                responsible: 'SPREV / Gabinet de Crisi',
+                trigger: 'Finalització de l\'alerta meteorològica.',
+                description: 'Tornada a la normalitat i anàlisi de l\'actuació.',
+                actions: [
+                    'Comunicat de represa d\'activitats.',
+                    'Inspecció de danys i reparacions urgents.',
+                    'Anàlisi tècnica post-episodi (SPREV + MeteoUIB + RiscBal).',
+                    'Elaboració de l\'informe final per millora contínua.'
+                ],
+                communication: 'Agraïment a la comunitat i informe de lliçons apreses.',
+                color: 'bg-slate-50 border-slate-500 text-slate-800'
+            }
+        };
+
+        const backdrop = document.getElementById('modal-backdrop');
+        const content = document.getElementById('modal-content');
+
+        function openModal(phaseId) {
+            const data = phases[phaseId];
+            if (!data) return;
+
+            document.getElementById('modal-header').className = `p-6 border-b flex justify-between items-center ${data.color}`;
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-description').textContent = data.description;
+            document.getElementById('modal-responsible').textContent = data.responsible;
+            document.getElementById('modal-trigger').textContent = data.trigger;
+            document.getElementById('modal-communication').textContent = data.communication;
+
+            const actionsList = document.getElementById('modal-actions');
+            actionsList.innerHTML = '';
+            data.actions.forEach((action, i) => {
+                const li = document.createElement('li');
+                li.className = 'flex items-start gap-3 p-2 rounded-md hover:bg-slate-50';
+                li.innerHTML = `
+                    <div class="mt-1 w-5 h-5 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px] font-bold">
+                        ${i + 1}
+                    </div>
+                    <span class="text-slate-700">${action}</span>
+                `;
+                actionsList.appendChild(li);
+            });
+
+            backdrop.classList.remove('hidden');
+            backdrop.classList.add('flex');
+            content.classList.add('modal-enter');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            backdrop.classList.add('hidden');
+            backdrop.classList.remove('flex');
+            content.classList.remove('modal-enter');
+            document.body.style.overflow = '';
+        }
+
+        // Tancar en fer clic a fora
+        backdrop.addEventListener('click', (e) => {
+            if (e.target === backdrop) closeModal();
+        });
+
+        // Tancar amb ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>

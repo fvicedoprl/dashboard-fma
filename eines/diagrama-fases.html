@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagrama de Flux Interactiu: Protocol FMA UIB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* cool-gray-50 */
+        }
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .flowchart-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            background-color: #0085CA; /* Pantone 300 C */
+            color: white;
+        }
+        .flowchart-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .flowchart-item.active {
+            border-color: #005b8f; /* Darker blue for active state */
+            box-shadow: 0 0 0 4px rgba(0, 91, 143, 0.4);
+        }
+        .arrow {
+            font-size: 2rem;
+            color: #9ca3af; /* gray-400 */
+            line-height: 1;
+        }
+        #details-panel {
+            min-height: 300px;
+        }
+        .detail-title {
+            font-weight: 600;
+            color: #1e3a8a; /* blue-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Protocol d'Actuació davant FMA</h1>
+            <p class="mt-2 text-lg text-gray-600">Procediment de Vigilància, Activació i Resposta (Punt 5)</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <!-- Columna del Diagrama de Flux (esquerra) -->
+            <div class="lg:col-span-2">
+                <h2 class="text-2xl font-semibold text-center mb-6 text-gray-700">Fases del Protocol</h2>
+                <div class="flowchart-container">
+                    <!-- Fase 5.1 -->
+                    <div id="fase1" class="flowchart-item w-full max-w-sm p-4 rounded-lg shadow-md" onclick="showDetails('fase1')">
+                        <div class="flex items-center justify-center gap-3">
+                            <span class="font-bold text-lg">5.1</span>
+                            <h3 class="font-bold text-lg">Vigilància i Detecció</h3>
+                        </div>
+                    </div>
+                    <div class="arrow">↓</div>
+                    <!-- Fase 5.2 -->
+                    <div id="fase2" class="flowchart-item w-full max-w-sm p-4 rounded-lg shadow-md" onclick="showDetails('fase2')">
+                        <div class="flex items-center justify-center gap-3">
+                            <span class="font-bold text-lg">5.2</span>
+                            <h3 class="font-bold text-lg">Verificació i Prealerta</h3>
+                        </div>
+                    </div>
+                    <div class="arrow">↓</div>
+                    <!-- Fase 5.3 -->
+                    <div id="fase3" class="flowchart-item w-full max-w-sm p-4 rounded-lg shadow-md" onclick="showDetails('fase3')">
+                        <div class="flex items-center justify-center gap-3">
+                            <span class="font-bold text-lg">5.3</span>
+                            <h3 class="font-bold text-lg">Activació i Presa de Decisions</h3>
+                        </div>
+                    </div>
+                    <div class="arrow">↓</div>
+                    <!-- Fase 5.4 -->
+                    <div id="fase4" class="flowchart-item w-full max-w-sm p-4 rounded-lg shadow-md" onclick="showDetails('fase4')">
+                        <div class="flex items-center justify-center gap-3">
+                            <span class="font-bold text-lg">5.4</span>
+                            <h3 class="font-bold text-lg">Desplegament i Aplicació</h3>
+                        </div>
+                    </div>
+                    <div class="arrow">↓</div>
+                    <!-- Fases 5.5, 5.6, 5.7 -->
+                    <div class="w-full max-w-sm grid grid-cols-1 gap-4">
+                       <div id="fase5" class="flowchart-item p-4 rounded-lg shadow-md" onclick="showDetails('fase5')">
+                           <div class="flex items-center justify-center gap-3">
+                               <span class="font-bold text-lg">5.5</span>
+                               <h3 class="font-bold text-lg">Seguiment i Actualització</h3>
+                           </div>
+                       </div>
+                       <div class="arrow text-center">↓</div>
+                       <div id="fase6" class="flowchart-item p-4 rounded-lg shadow-md" onclick="showDetails('fase6')">
+                           <div class="flex items-center justify-center gap-3">
+                               <span class="font-bold text-lg">5.6</span>
+                               <h3 class="font-bold text-lg">Desactivació del Protocol</h3>
+                           </div>
+                       </div>
+                       <div class="arrow text-center">↓</div>
+                       <div id="fase7" class="flowchart-item p-4 rounded-lg shadow-md" onclick="showDetails('fase7')">
+                           <div class="flex items-center justify-center gap-3">
+                               <span class="font-bold text-lg">5.7</span>
+                               <h3 class="font-bold text-lg">Avaluació Posterior</h3>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna de Detalls (dreta) -->
+            <div class="lg:col-span-3">
+                 <h2 class="text-2xl font-semibold text-center mb-6 text-gray-700">Llegenda de la Fase</h2>
+                <div id="details-panel" class="bg-white p-6 sm:p-8 rounded-xl shadow-lg transition-all duration-500">
+                    <div id="details-content" class="text-gray-700">
+                        <p class="text-center text-xl text-gray-500 h-full flex items-center justify-center">Seleccioneu una fase del diagrama per veure'n els detalls.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data store for phase details, extracted from the document
+        const phaseData = {
+            fase1: {
+                title: "5.1 - Fase de Vigilància i Detecció",
+                responsable: "SPREV (en horari laboral) i Persona de Guàrdia Localitzable (fora d'horari).",
+                accio: "Monitoratge actiu i continu de les fonts oficials (AEMET, 112, Protecció Civil) i eines de suport (RiscBal-App, grup MeteoUIB).",
+                desencadenant: "L'emissió d'un avís de nivell Groc, Taronja o Vermell que afecti les àrees d'influència de la UIB.",
+                actuacions: "Seguiment proactiu de l'evolució dels avisos. En detectar un avís Taronja o Vermell, s'analitza l'impacte. Fora d'horari, la persona de guàrdia verifica la informació i, si el risc és alt (Taronja/Vermell), contacta immediatament amb els membres clau del Gabinet de Crisi."
+            },
+            fase2: {
+                title: "5.2 - Fase de Verificació i Prealerta interna",
+                responsable: "SPREV / Persona de Guàrdia.",
+                accio: "Verificació de la informació de l'avís (fenomen, horari, probabilitat) i realització d'una valoració inicial del risc potencial per a la UIB.",
+                desencadenant: "Detecció d'un avís de nivell Groc, Taronja o Vermell.",
+                actuacions: "Comunicació immediata i fefaent als membres clau del Gabinet de Crisi (Vicerector/a competent) per activar la cadena de decisió. Aquesta fase és proactiva i busca l'anticipació."
+            },
+            fase3: {
+                title: "5.3 - Fase d'Activació Formal i Presa de Decisions",
+                responsable: "Gabinet de Crisi de la UIB.",
+                accio: "Avaluar la situació i prendre les decisions estratègiques.",
+                desencadenant: "Recepció de la prealerta per part del SPREV o la Persona de Guàrdia. La convocatòria és automàtica per a nivells Taronja o Vermell.",
+                actuacions: "Prendre decisions com: activació formal del protocol, suspensió d'activitats (parcial o total), tancament d'instal·lacions, etc. Emetre dues ordres paral·leles: una de Comunicació Institucional (al Servei de Comunicació) i una d'Actuació Operativa (al Vicerector/a competent)."
+            },
+            fase4: {
+                title: "5.4 - Fase de Desplegament i Aplicació de mesures",
+                responsable: "Coordinador operatiu general (Vicerector/a designat) i, a nivell local, el Cap d'Emergències de cada edifici.",
+                accio: "Execució de les mesures preventives i de mitigació ordenades.",
+                desencadenant: "Recepció de l'ordre operativa del Gabinet de Crisi o de la comunicació oficial massiva.",
+                actuacions: "Els serveis executors (STI, Seguretat) i els equips d'emergència locals (Intervenció, Evacuació, Transmissions) apliquen les mesures físiques sobre les infraestructures i les persones (ex: neteja d'embornals, assegurament d'elements, control d'accessos, tancament de finestres)."
+            },
+            fase5: {
+                title: "5.5 - Fase de Seguiment i Actualització de la informació",
+                responsable: "Gabinet de Crisi i SPREV.",
+                accio: "Mantenir un seguiment constant de l'evolució del FMA i de l'efectivitat de les mesures aplicades.",
+                desencadenant: "El protocol està actiu.",
+                actuacions: "Proporcionar actualitzacions periòdiques a la comunitat universitària si la situació canvia o es perllonga en el temps."
+            },
+            fase6: {
+                title: "5.6 - Fase de Desactivació del Protocol",
+                responsable: "Gabinet de Crisi.",
+                accio: "Declarar oficialment la finalització de la situació d'alerta i el retorn a la normalitat.",
+                desencadenant: "Les condicions meteorològiques tornen a ser segures i el risc ha finalitzat.",
+                actuacions: "Informar a tota la comunitat universitària sobre la tornada a la normalitat i comunicar les possibles afectacions residuals que puguin quedar (instal·lacions tancades per reparació, etc.)."
+            },
+            fase7: {
+                title: "5.7 - Fase d'avaluació posterior de l'episodi",
+                responsable: "SPREV, amb la col·laboració de tots els serveis implicats.",
+                accio: "Realitzar un informe tècnic post-incident per analitzar l'actuació, registrar les incidències i extreure lliçons apreses.",
+                desencadenant: "Després de cada activació significativa del protocol (especialment nivells Taronja o Vermell, o si hi ha hagut danys).",
+                actuacions: "L'informe ha d'incloure: descripció de l'episodi, mesures adoptades, incidències, avaluació de l'eficàcia i propostes de millora. Aquest informe és clau per a la revisió i millora contínua del protocol."
+            }
+        };
+
+        let activePhaseId = null;
+
+        // Function to display the details of a selected phase
+        function showDetails(phaseId) {
+            const data = phaseData[phaseId];
+            const detailsContent = document.getElementById('details-content');
+            
+            // Remove active class from previous item
+            if (activePhaseId) {
+                document.getElementById(activePhaseId).classList.remove('active');
+            }
+
+            // Add active class to current item
+            const currentItem = document.getElementById(phaseId);
+            currentItem.classList.add('active');
+            activePhaseId = phaseId;
+
+            detailsContent.innerHTML = `
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">${data.title}</h3>
+                <div class="space-y-5">
+                    <div>
+                        <p class="detail-title">👤 Responsable:</p>
+                        <p class="mt-1 pl-2">${data.responsable}</p>
+                    </div>
+                    <div>
+                        <p class="detail-title">⚡ Desencadenant:</p>
+                        <p class="mt-1 pl-2">${data.desencadenant}</p>
+                    </div>
+                    <div>
+                        <p class="detail-title">🎯 Acció Clau:</p>
+                        <p class="mt-1 pl-2">${data.accio}</p>
+                    </div>
+                    <div>
+                        <p class="detail-title">📋 Actuacions:</p>
+                        <p class="mt-1 pl-2">${data.actuacions}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Show the first phase by default on load
+        window.onload = () => {
+            showDetails('fase1');
+        };
+    </script>
+
+</body>
+</html>
